@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sifang.mapper.DoctorMapper">
+
+    <insert id="addDoctor" parameterType="Doctor">
+        insert into doctor(num, name,gender,tel,dept,birth,position,speciality,introduction)
+               values (#{num},#{name},#{gender},#{tel},#{dept},#{birth},#{position},#{speciality},#{introduction})
+    </insert>
+
+    <select id="isNumExist" parameterType="String" resultType="Doctor">
+        select * from doctor where num = #{num}
+    </select>
+
+    <update id="updateDoctor" parameterType="Doctor">
+        update doctor set num = #{num}, name = #{name}, gender = #{gender}, tel = #{tel},
+                dept = #{dept}, birth = #{birth}, position = #{position},speciality = #{speciality},
+                introduction = #{introduction} where id = #{id}
+    </update>
+
+    <delete id="deleteDoctor" parameterType="int">
+        delete from doctor where id = #{id}
+    </delete>
+
+</mapper>

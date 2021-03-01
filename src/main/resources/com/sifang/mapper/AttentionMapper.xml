@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sifang.mapper.AttentionMapper">
+
+    <insert id="addAttention" parameterType="Attention">
+        insert into attention(title, day, author, content) values (#{title}, #{day}, #{author},#{content})
+    </insert>
+
+    <update id="updateAttention" parameterType="Attention">
+        update attention set title=#{title}, day=#{day}, author=#{author},content=#{content} where id=#{id}
+    </update>
+
+    <delete id="deleteAttention" parameterType="int">
+        delete from attention where id=#{id}
+    </delete>
+
+</mapper>

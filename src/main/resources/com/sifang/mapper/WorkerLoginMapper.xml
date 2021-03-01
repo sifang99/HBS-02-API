@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sifang.mapper.WorkerLoginMapper">
+
+    <insert id="addWorker" parameterType="WorkerLogin">
+        insert into worker_login(num,pwd) values (#{num},#{pwd})
+    </insert>
+
+    <update id="updatePwd" parameterType="String">
+        update worker_login set pwd = #{pwd} where num = #{num}
+    </update>
+
+</mapper>

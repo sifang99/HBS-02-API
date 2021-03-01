@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sifang.mapper.PatientMessageMapper">
+
+    <insert id="addPatient" parameterType="PatientMessage">
+        insert into patient_message(account, name,tel, gender,birth,address,user_id)
+            values (#{account},#{name},#{tel},#{gender},#{birth},#{address},#{userId})
+    </insert>
+
+    <update id="updatePatient" parameterType="PatientMessage">
+        update patient_message set account = #{account},name  = #{name},tel = #{tel},gender = #{gender},
+            birth = #{birth},address = #{address},user_id=#{userId} where id = #{id}
+    </update>
+
+    <delete id="deletePatientByAccount" parameterType="String">
+        delete from patient_message where account = #{account}
+    </delete>
+
+</mapper>

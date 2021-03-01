@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sifang.mapper.DeptMapper">
+
+    <insert id="addDept" parameterType="Dept">
+        insert into dept(name, affiliate,introduction) values (#{name}, #{affiliate}, #{introduction})
+    </insert>
+
+    <update id="updateDept" parameterType="Dept">
+        update dept set name = #{name}, affiliate = #{affiliate},introduction = #{introduction} where id = #{id}
+    </update>
+
+    <select id="getDeptList" resultType="Dept">
+        select * from dept
+    </select>
+
+    <delete id="deleteAffiliation" parameterType="int">
+        delete from dept where affiliate = #{affiliate}
+    </delete>
+
+    <delete id="deleteDept" parameterType="int">
+        delete from dept where id = #{id}
+    </delete>
+
+    <select id="getDeptById" parameterType="int" resultType="Dept">
+        select * from dept where id = #{id}
+    </select>
+
+    <select id="getDeptByAffiliate" parameterType="int" resultType="Dept">
+        select * from dept where affiliate = #{affiliate}
+    </select>
+
+</mapper>

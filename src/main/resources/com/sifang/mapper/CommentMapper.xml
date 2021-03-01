@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sifang.mapper.CommentMapper">
+
+    <insert id="addComment" parameterType="Comment">
+        insert into comment(writer,date,role,comment,doctor_num) values (#{writer},#{date},#{role},#{comment},#{doctorNum})
+    </insert>
+
+    <delete id="deleteComment" parameterType="int">
+        delete from comment where id=#{id}
+    </delete>
+</mapper>

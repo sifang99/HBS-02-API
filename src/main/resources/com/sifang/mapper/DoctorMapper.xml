@@ -21,4 +21,8 @@
         delete from doctor where id = #{id}
     </delete>
 
+    <select id="getDoctorsByDept" resultType="Doctor">
+        select * from doctor where dept=#{dept}
+    </select>
+
 </mapper>

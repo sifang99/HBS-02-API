@@ -2,6 +2,10 @@ package com.sifang.service;
 
 import com.sifang.pojo.Doctor;
 import com.sifang.pojo.ReturnMessage;
+import sun.plugin.javascript.navig.Link;
+
+import javax.print.Doc;
+import java.util.List;
 
 public interface DoctorService {
     //添加医生
@@ -12,4 +16,6 @@ public interface DoctorService {
     ReturnMessage updateDoctor(Doctor doctor);
     //通过id删除某个医生
     ReturnMessage deleteDoctorById(int id);
+    //通过科室id获取医生列表
+    List<Doctor> getDoctorsByDept(int dept);
 }

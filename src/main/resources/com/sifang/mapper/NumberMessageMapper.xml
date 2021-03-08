@@ -6,4 +6,14 @@
         select * from number_manage
     </select>
 
+    <insert id="addNumberMessage" parameterType="NumberMessage">
+        insert into
+            number_manage (dept,doctor_num,remain,number_date,time_interval,start_time,end_time,place,fee,total,status)
+        values (#{dept},#{doctorNum},#{remain},#{numberDate},#{timeInterval},#{startTime},#{endTime},#{place},#{fee},#{total},#{status})
+    </insert>
+
+    <select id="getNumberByDept" resultType="NumberMessage">
+        select * from number_manage where dept = #{dept} and number_date=#{numberDate}
+    </select>
+
 </mapper>

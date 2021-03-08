@@ -3,6 +3,8 @@ package com.sifang.mapper;
 import com.sifang.pojo.Dept;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 

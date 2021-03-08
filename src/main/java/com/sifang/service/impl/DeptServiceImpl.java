@@ -7,7 +7,10 @@ import com.sifang.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DeptServiceImpl implements DeptService {
@@ -43,8 +46,30 @@ public class DeptServiceImpl implements DeptService {
     }
 
     @Override
-    public List<Dept> getAllDepts() {
-        return deptMapper.getDeptList();
+    public List<Map<String, Object>> getAllDepts() {
+        //首先查询获得所有一级科室
+        List<Dept> deptList = deptMapper.getDeptByAffiliate(0);
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        int length = deptList.size();
+        for (int i = 0; i < length; i++){
+            Map<String, Object> dept = new HashMap<>();
+            dept.put("id", deptList.get(i).getId());
+            dept.put("name", deptList.get(i).getName());
+
+            List<Dept> affiliation = this.deptMapper.getDeptByAffiliate(deptList.get(i).getId());
+            //如果有二级科室，deptMapper.getDeptByAffiliate有返回值
+            //如果没有二级科室,deptMapper.getDeptByAffiliate返回值为空
+            //如果没有二级科室，就将其本身装进affiliation里面
+            if (affiliation.size() == 0){
+                //保证返回给前端的数据为数组
+                affiliation.add(deptList.get(i));
+            }
+            dept.put("affiliation", affiliation);
+            resultList.add(dept);
+        }
+//        System.out.println(resultList);
+        //将二级科室封装在一级科室内，然后返回
+        return resultList;
     }
 
     @Override
@@ -80,5 +105,10 @@ public class DeptServiceImpl implements DeptService {
             returnMessage.setMessage("删除"+dept.getName()+"失败！");
         }
         return returnMessage;
+    }
+
+    @Override
+    public Dept getDeptById(int id) {
+        return this.deptMapper.getDeptById(id);
     }
 }

@@ -9,8 +9,12 @@ import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.Doc;
+import java.util.List;
+
 
 @RestController
+@CrossOrigin
 public class DoctorController {
 
     @Autowired
@@ -18,6 +22,11 @@ public class DoctorController {
     @Autowired
     private WorkerService workerService;
 
+    //通过dept的id获得医生
+    @GetMapping("/getDoctorsByDept")
+    public List<Doctor> getDoctorsByDept(int dept){
+        return this.doctorService.getDoctorsByDept(dept);
+    }
     //添加医生
     @PostMapping("/addDoctor")
     public ReturnMessage addDoctor(@RequestBody Doctor doctor){

@@ -10,6 +10,8 @@ import com.sifang.service.WorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DoctorServiceImpl implements DoctorService {
 
@@ -70,6 +72,11 @@ public class DoctorServiceImpl implements DoctorService {
             returnMessage.setMessage("删除失败！");
         }
         return returnMessage;
+    }
+
+    @Override
+    public List<Doctor> getDoctorsByDept(int dept) {
+        return this.doctorMapper.getDoctorsByDept(dept);
     }
 
 }

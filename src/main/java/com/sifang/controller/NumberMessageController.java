@@ -1,21 +1,20 @@
 package com.sifang.controller;
 
-import com.sifang.mapper.NumberMessageMapper;
-import com.sifang.pojo.NumberMessage;
+import com.sifang.pojo.ReturnMessage;
+import com.sifang.service.NumberMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
 
 @RestController
+@CrossOrigin
 public class NumberMessageController {
     @Autowired
-    private NumberMessageMapper numberMessageMapper;
+    private NumberMessageService numberMessageService;
 
-    @GetMapping("/getAllNumberMessage")
-    public List<NumberMessage> getAllNumberMessage(){
-        List<NumberMessage> numberMessageList = numberMessageMapper.getNumerMessageList();
-        return numberMessageList;
+    @PostMapping("/addNumberMessage")
+    public ReturnMessage addNumberMessage(@RequestBody Map<String, Object> schedules){
+        return this.numberMessageService.addNumberMessage(schedules);
     }
 }

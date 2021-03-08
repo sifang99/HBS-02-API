@@ -4,14 +4,14 @@ import com.sifang.pojo.Dept;
 import com.sifang.pojo.ReturnMessage;
 import com.sifang.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
+@CrossOrigin
+@RequestMapping("/Dept")
 public class DeptController {
 
     @Autowired
@@ -28,13 +28,17 @@ public class DeptController {
     }
 
     @GetMapping("/getAllDepts")
-    public List<Dept> getAllDepts(){
+    public List<Map<String, Object>> getAllDepts(){
         return deptService.getAllDepts();
     }
 
     @GetMapping("/deleteDept")
     public ReturnMessage deletDept(int id){
         return deptService.deleteDept(id);
+    }
+    @GetMapping("/getDeptById")
+    public Dept getDeptById(int id){
+        return this.deptService.getDeptById(id);
     }
 
 }

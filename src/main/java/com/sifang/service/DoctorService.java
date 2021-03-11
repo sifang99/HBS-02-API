@@ -6,6 +6,7 @@ import sun.plugin.javascript.navig.Link;
 
 import javax.print.Doc;
 import java.util.List;
+import java.util.Map;
 
 public interface DoctorService {
     //添加医生
@@ -17,5 +18,8 @@ public interface DoctorService {
     //通过id删除某个医生
     ReturnMessage deleteDoctorById(int id);
     //通过科室id获取医生列表
-    List<Doctor> getDoctorsByDept(int dept);
+    List<Map<String, Object>> getDoctorsByDept(int dept);
+
+    //通过num查询医生
+    Doctor getDoctorByNum(String doctorNum);
 }

@@ -3,8 +3,8 @@
 <mapper namespace="com.sifang.mapper.DoctorMapper">
 
     <insert id="addDoctor" parameterType="Doctor">
-        insert into doctor(num, name,gender,tel,dept,birth,position,speciality,introduction)
-               values (#{num},#{name},#{gender},#{tel},#{dept},#{birth},#{position},#{speciality},#{introduction})
+        insert into doctor(num, name,gender,dept,birth,position,speciality,introduction)
+               values (#{num},#{name},#{gender},#{dept},#{birth},#{position},#{speciality},#{introduction})
     </insert>
 
     <select id="isNumExist" parameterType="String" resultType="Doctor">
@@ -12,7 +12,7 @@
     </select>
 
     <update id="updateDoctor" parameterType="Doctor">
-        update doctor set num = #{num}, name = #{name}, gender = #{gender}, tel = #{tel},
+        update doctor set num = #{num}, name = #{name}, gender = #{gender},
                 dept = #{dept}, birth = #{birth}, position = #{position},speciality = #{speciality},
                 introduction = #{introduction} where id = #{id}
     </update>
@@ -23,6 +23,10 @@
 
     <select id="getDoctorsByDept" resultType="Doctor">
         select * from doctor where dept=#{dept}
+    </select>
+
+    <select id="getDoctorByNum" resultType="Doctor">
+        select * from doctor where num = #{doctorNum}
     </select>
 
 </mapper>

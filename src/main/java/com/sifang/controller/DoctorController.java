@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.print.Doc;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -24,7 +25,7 @@ public class DoctorController {
 
     //通过dept的id获得医生
     @GetMapping("/getDoctorsByDept")
-    public List<Doctor> getDoctorsByDept(int dept){
+    public List<Map<String, Object>> getDoctorsByDept(int dept){
         return this.doctorService.getDoctorsByDept(dept);
     }
     //添加医生
@@ -64,6 +65,11 @@ public class DoctorController {
     @RequestMapping("/deleteDoctor")
     public ReturnMessage deleteDoctor(int id){
         return doctorService.deleteDoctorById(id);
+    }
+
+    @GetMapping("/getDoctorByNum")
+    public Doctor getDoctorByNum(String doctorNum){
+        return this.doctorService.getDoctorByNum(doctorNum);
     }
 
 }

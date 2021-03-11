@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService {
             char ch = pwd.charAt(i);
             if (ch >= 48 && ch <= 57){
                 includeNumber = true;
-            }else if((ch >= 65 && ch <= 90) ||  (ch >= 97 && ch <= 122)){
+            }else if((ch >= 65 && ch <= 90) ||  (ch >= 97 && ch <= 122) || ch=='_'){
                 includeLetter = true;
             }else {
                 return false;
@@ -179,7 +179,7 @@ public class UserServiceImpl implements UserService {
             }
         }else{
             returnMessage.setIsSuccess(3);
-            returnMessage.setMessage("昵称不符合规范！");
+            returnMessage.setMessage("昵称可由中文、字母、数字组成，但不能以数字开头！");
             return returnMessage;
         }
     }

@@ -37,7 +37,7 @@ public class DeptController {
         return deptService.deleteDept(id);
     }
     @GetMapping("/getDeptById")
-    public Dept getDeptById(int id){
+    public Dept getDeptById(Integer id){
         return this.deptService.getDeptById(id);
     }
 

@@ -14,8 +14,7 @@ public class Doctor {
     private String num;
     private String name;
     private Integer gender;//0：女性，1：男性
-    private String tel;
-    private String dept;
+    private int dept;
     private Date birth;
     private String position;
     private String speciality;

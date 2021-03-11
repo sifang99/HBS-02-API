@@ -15,4 +15,5 @@ public interface DoctorMapper {
     int updateDoctor(Doctor doctor);
     int deleteDoctor(int id);
     LinkedList<Doctor> getDoctorsByDept(int dept);
+    Doctor getDoctorByNum(String doctorNum);
 }

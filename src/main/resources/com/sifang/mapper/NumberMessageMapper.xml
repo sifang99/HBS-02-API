@@ -16,4 +16,26 @@
         select * from number_manage where dept = #{dept} and number_date=#{numberDate}
     </select>
 
+    <select id="getNumberByDocDate" resultType="NumberMessage">
+        select * from number_manage where doctor_num = #{doctorNum} and number_date &gt;= #{numberDate}
+    </select>
+
+    <select id="getNumberByDoctor" resultType="NumberMessage">
+        select *
+        from number_manage
+        where doctor_num = #{doctorNum};
+    </select>
+
+    <update id="updateNumberById" parameterType="NumberMessage">
+        update number_manage
+        set dept=#{dept}, doctor_num=#{doctorNum},remain=#{remain},
+            number_date=#{numberDate},time_interval=#{timeInterval},
+            start_time=#{startTime},end_time=#{endTime},place=#{place},
+            fee=#{fee},total=#{total},status=#{status}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteNumberById" parameterType="int">
+        delete from number_manage where id=#{id}
+    </delete>
 </mapper>

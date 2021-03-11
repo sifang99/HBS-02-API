@@ -6,17 +6,22 @@ import com.sifang.pojo.Doctor;
 import com.sifang.pojo.ReturnMessage;
 import com.sifang.pojo.WorkerLogin;
 import com.sifang.service.DoctorService;
+import com.sifang.service.NumberMessageService;
 import com.sifang.service.WorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.sql.Date;
+import java.util.*;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
 
     @Autowired
     private DoctorMapper doctorMapper;
+    @Autowired
+    private NumberMessageService numberMessageService;
+
 
     @Override
     public ReturnMessage addDoctor(Doctor doctor) {
@@ -75,8 +80,55 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public List<Doctor> getDoctorsByDept(int dept) {
-        return this.doctorMapper.getDoctorsByDept(dept);
+    public List<Map<String, Object>> getDoctorsByDept(int dept) {
+        LinkedList<Doctor> doctorList = this.doctorMapper.getDoctorsByDept(dept);
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        int length = doctorList.size();
+
+        //获得现在的日期
+        Calendar calendar = Calendar.getInstance();
+        String dateStr = String.valueOf(calendar.get(Calendar.YEAR));
+        int month = calendar.get(Calendar.MONTH) + 1;
+        if (month >= 10){
+            dateStr = dateStr + "-" + String.valueOf(month);
+        }else {
+            dateStr = dateStr + "-0" + String.valueOf(month);
+        }
+
+        int day = calendar.get(Calendar.DATE);
+        if (day >= 10){
+            dateStr = dateStr + "-" + String.valueOf(day);
+        }else{
+            dateStr = dateStr + "-0" + String.valueOf(day);
+        }
+        Date date = Date.valueOf(dateStr);
+
+        //封装返回数据
+        for (int i = 0; i < length; i++){
+            Map<String, Object> doctor = new HashMap<>();
+            doctor.put("num", doctorList.get(i).getNum());
+            doctor.put("name", doctorList.get(i).getName());
+            doctor.put("position", doctorList.get(i).getPosition());
+            doctor.put("state",this.isArranged(doctorList.get(i).getNum(), date));
+            resultList.add(doctor);
+        }
+        System.out.println(resultList);
+        return resultList;
+    }
+
+    @Override
+    public Doctor getDoctorByNum(String doctorNum) {
+        return this.doctorMapper.getDoctorByNum(doctorNum);
+    }
+
+    //辅助函数
+    //判断医生是否已经排班
+    boolean isArranged(String doctorNum, Date date){
+        if (this.numberMessageService.getNumberByDocDate(doctorNum, date) != null){
+            return  true;
+        }else{
+            return false;
+        }
     }
 
 }

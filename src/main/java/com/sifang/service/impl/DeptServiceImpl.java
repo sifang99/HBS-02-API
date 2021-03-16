@@ -57,6 +57,7 @@ public class DeptServiceImpl implements DeptService {
             dept.put("id", deptList.get(i).getId());
             dept.put("name", deptList.get(i).getName());
             dept.put("affiliate",0);
+            dept.put("introduction",deptList.get(i).getIntroduction());
 
             List<Dept> affiliation = this.deptMapper.getDeptByAffiliate(deptList.get(i).getId());
             //如果有二级科室，deptMapper.getDeptByAffiliate有返回值

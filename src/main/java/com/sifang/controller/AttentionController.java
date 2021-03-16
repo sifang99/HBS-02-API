@@ -4,12 +4,13 @@ import com.sifang.pojo.Attention;
 import com.sifang.pojo.ReturnMessage;
 import com.sifang.service.AttentionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.Date;
+import java.util.List;
 
 @RestController
+@CrossOrigin
 public class AttentionController {
     @Autowired
     private AttentionService attentionService;
@@ -23,9 +24,13 @@ public class AttentionController {
     public ReturnMessage updateAttention(@RequestBody Attention attention){
         return attentionService.updateAttention(attention);
     }
+    @GetMapping("/getAttentionByDate")
+    public List<Attention> getAttentionList(Date date){
+        return this.attentionService.getAttentionList(date);
+    }
 
     @GetMapping("/deleteAttention")
-    public ReturnMessage deleteAttention(int id){
+    public ReturnMessage deleteAttention(int id[]){
         return  attentionService.deleteAttention(id);
     }
 }

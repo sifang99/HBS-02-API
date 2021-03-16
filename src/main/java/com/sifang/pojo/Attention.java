@@ -12,7 +12,7 @@ import java.sql.Date;
 public class Attention {
     private int id;
     private String title;
-    private Date day;
+    private Date publishDay;
     private String author;
     private String content;
 }

@@ -3,15 +3,19 @@
 <mapper namespace="com.sifang.mapper.AttentionMapper">
 
     <insert id="addAttention" parameterType="Attention">
-        insert into attention(title, day, author, content) values (#{title}, #{day}, #{author},#{content})
+        insert into attention(title, publish_day, author, content) values (#{title}, #{publishDay}, #{author},#{content})
     </insert>
 
     <update id="updateAttention" parameterType="Attention">
-        update attention set title=#{title}, day=#{day}, author=#{author},content=#{content} where id=#{id}
+        update attention set title=#{title}, publish_day=#{publishDay}, author=#{author},content=#{content} where id=#{id}
     </update>
 
     <delete id="deleteAttention" parameterType="int">
         delete from attention where id=#{id}
     </delete>
+
+    <select id="getAttentionListByDate" parameterType="Date" resultType="Attention">
+        select * from attention where publish_day = #{publishDay}
+    </select>
 
 </mapper>

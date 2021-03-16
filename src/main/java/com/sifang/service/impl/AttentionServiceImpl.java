@@ -7,6 +7,10 @@ import com.sifang.service.AttentionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.sql.Date;
+import java.util.List;
+
 @Service
 public class AttentionServiceImpl implements AttentionService {
 
@@ -41,15 +45,29 @@ public class AttentionServiceImpl implements AttentionService {
     }
 
     @Override
-    public ReturnMessage deleteAttention(int id) {
+    @Transactional
+    public ReturnMessage deleteAttention(int id[]) {
         ReturnMessage returnMessage = new ReturnMessage();
-        if (attentionMapper.deleteAttention(id) >= 1){
+        int length = id.length;
+        int count = 0;
+        for (int i = 0; i < length; i++){
+            if (attentionMapper.deleteAttention(id[i]) >= 1){
+                count++;
+            }
+        }
+        if (count == length){
             returnMessage.setIsSuccess(0);
             returnMessage.setMessage("删除成功！");
-        }else {
+        }else{
             returnMessage.setIsSuccess(1);
             returnMessage.setMessage("删除失败!");
         }
         return returnMessage;
+    }
+
+    @Override
+    public List<Attention> getAttentionList(Date publishDay) {
+        System.out.println(publishDay);
+        return attentionMapper.getAttentionListByDate(publishDay);
     }
 }

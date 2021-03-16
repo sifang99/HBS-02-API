@@ -10,4 +10,8 @@
         update worker_login set pwd = #{pwd} where num = #{num}
     </update>
 
+    <delete id="deleteWorker" parameterType="String">
+        delete from worker_login where num = #{num}
+    </delete>
+
 </mapper>

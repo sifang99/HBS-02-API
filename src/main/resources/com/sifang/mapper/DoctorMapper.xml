@@ -17,8 +17,8 @@
                 introduction = #{introduction} where id = #{id}
     </update>
 
-    <delete id="deleteDoctor" parameterType="int">
-        delete from doctor where id = #{id}
+    <delete id="deleteDoctor" parameterType="String">
+        delete from doctor where num = #{num}
     </delete>
 
     <select id="getDoctorsByDept" resultType="Doctor">

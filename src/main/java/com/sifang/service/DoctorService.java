@@ -15,11 +15,11 @@ public interface DoctorService {
     boolean isNumExist(String num);
     //修改医生
     ReturnMessage updateDoctor(Doctor doctor);
-    //通过id删除某个医生
-    ReturnMessage deleteDoctorById(int id);
+    //通过编号删除某个医生
+    ReturnMessage deleteDoctorByNum(String num);
     //通过科室id获取医生列表
     List<Map<String, Object>> getDoctorsByDept(int dept);
-
+    List<Doctor> getDoctorListByDept(int dept);
     //通过num查询医生
     Doctor getDoctorByNum(String doctorNum);
 }

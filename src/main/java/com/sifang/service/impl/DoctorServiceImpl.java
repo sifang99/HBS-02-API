@@ -67,9 +67,9 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public ReturnMessage deleteDoctorById(int id) {
+    public ReturnMessage deleteDoctorByNum(String num) {
         ReturnMessage returnMessage = new ReturnMessage();
-        if (doctorMapper.deleteDoctor(id) >= 1){
+        if (doctorMapper.deleteDoctor(num) >= 1){
             returnMessage.setIsSuccess(0);
             returnMessage.setMessage("删除成功！");
         }else{
@@ -79,6 +79,7 @@ public class DoctorServiceImpl implements DoctorService {
         return returnMessage;
     }
 
+    //根据科室查询医生信息，并判断该医生是否已经排班，然后返回未排班的医生信息
     @Override
     public List<Map<String, Object>> getDoctorsByDept(int dept) {
         LinkedList<Doctor> doctorList = this.doctorMapper.getDoctorsByDept(dept);
@@ -114,6 +115,11 @@ public class DoctorServiceImpl implements DoctorService {
         }
         System.out.println(resultList);
         return resultList;
+    }
+
+    @Override
+    public List<Doctor> getDoctorListByDept(int dept) {
+        return this.doctorMapper.getDoctorsByDept(dept);
     }
 
     @Override

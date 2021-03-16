@@ -39,4 +39,15 @@ public class WorkerServiceImpl implements WorkerService {
         }
         return returnMessage;
     }
+
+    @Override
+    public ReturnMessage deleteWorker(String num) {
+        ReturnMessage returnMessage = new ReturnMessage();
+        if (this.workerLoginMapper.deleteWorker(num) >= 1){
+            returnMessage.setIsSuccess(0);
+        }else{
+            returnMessage.setIsSuccess(1);
+        }
+        return returnMessage;
+    }
 }

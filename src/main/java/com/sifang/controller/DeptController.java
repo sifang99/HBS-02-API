@@ -33,7 +33,7 @@ public class DeptController {
     }
 
     @GetMapping("/deleteDept")
-    public ReturnMessage deletDept(int id){
+    public ReturnMessage deletDept(int[] id){
         return deptService.deleteDept(id);
     }
     @GetMapping("/getDeptById")

@@ -28,6 +28,10 @@ public class DoctorController {
     public List<Map<String, Object>> getDoctorsByDept(int dept){
         return this.doctorService.getDoctorsByDept(dept);
     }
+    @GetMapping("/getDoctorListByDept")
+    public List<Doctor> getDoctorListByDept(int dept){
+        return this.doctorService.getDoctorListByDept(dept);
+    }
     //添加医生
     @PostMapping("/addDoctor")
     public ReturnMessage addDoctor(@RequestBody Doctor doctor){
@@ -61,10 +65,23 @@ public class DoctorController {
         return doctorService.updateDoctor(doctor);
     }
 
-    //删除医生
+    //删除医生信息的同时删除登录账号
     @RequestMapping("/deleteDoctor")
-    public ReturnMessage deleteDoctor(int id){
-        return doctorService.deleteDoctorById(id);
+    public ReturnMessage deleteDoctor(String num){
+        ReturnMessage returnMessage = new ReturnMessage();
+        if (doctorService.deleteDoctorByNum(num).getIsSuccess() == 0){
+            if (workerService.deleteWorker(num).getIsSuccess() == 0){
+                returnMessage.setIsSuccess(0);
+                returnMessage.setMessage("删除成功！");
+            }else{
+                returnMessage.setMessage("删除登录账号失败！");
+                returnMessage.setIsSuccess(1);
+            }
+        }else{
+            returnMessage.setMessage("删除医生失败！");
+            returnMessage.setIsSuccess(1);
+        }
+        return returnMessage;
     }
 
     @GetMapping("/getDoctorByNum")

@@ -119,7 +119,7 @@ public class NumberMessageServiceImpl implements NumberMessageService {
     }
 
     @Override
-    public NumberMessage getNumberByDocDate(String doctorNumber, Date numberDate) {
+    public NumberMessage  getNumberByDocDate(String doctorNumber, Date numberDate) {
         return this.numberMessageMapper.getNumberByDocDate(doctorNumber, numberDate);
     }
 

@@ -4,10 +4,7 @@ import com.sifang.pojo.ReturnMessage;
 import com.sifang.pojo.UserLogin;
 import com.sifang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -37,6 +34,34 @@ public class UserLoginController {
         System.out.println(userLogin);
         return userService.register(userLogin.getNickname(), userLogin.getTel(), userLogin.getPwd());
     };
+
+    //通过电话号码查询用户
+    @GetMapping("/getUserByTel")
+    public ReturnMessage getUserByTel(String tel){
+        ReturnMessage returnMessage = new ReturnMessage();
+        if (this.userService.getUserByTel(tel) != null){
+            returnMessage.setIsSuccess(0);
+            returnMessage.setMessage("该电话号码已注册！");
+        }else{
+            returnMessage.setMessage("该电话号码并未注册");
+            returnMessage.setIsSuccess(1);
+        }
+        return  returnMessage;
+    }
+
+    //通过昵称查询用户
+    @GetMapping("/getUserByNickname")
+    public ReturnMessage getUserByNickname(String nickname){
+        ReturnMessage returnMessage = new ReturnMessage();
+        if (this.userService.getUserByNickname(nickname) != null){
+            returnMessage.setIsSuccess(0);
+            returnMessage.setMessage("该昵称已注册");
+        }else {
+            returnMessage.setIsSuccess(1);
+            returnMessage.setMessage("该昵称尚未注册");
+        }
+        return  returnMessage;
+    }
 
     //用户修改密码
     @RequestMapping("/userUpdatePwd")

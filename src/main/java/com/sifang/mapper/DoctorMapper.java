@@ -13,7 +13,7 @@ public interface DoctorMapper {
     int addDoctor(Doctor doctor);
     Doctor isNumExist(String num);
     int updateDoctor(Doctor doctor);
-    int deleteDoctor(int id);
+    int deleteDoctor(String num);
     LinkedList<Doctor> getDoctorsByDept(int dept);
     Doctor getDoctorByNum(String doctorNum);
 }

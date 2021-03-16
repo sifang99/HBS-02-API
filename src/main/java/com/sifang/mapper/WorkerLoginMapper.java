@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface WorkerLoginMapper {
     int addWorker(WorkerLogin workerLogin);
     int updatePwd(String num, String pwd);
+    int deleteWorker(String num);
 }

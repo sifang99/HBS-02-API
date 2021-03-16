@@ -13,7 +13,7 @@ public interface DeptService {
     //获得所有科室
     List<Map<String, Object>> getAllDepts();
     //删除科室，如果被删除科室是一级科室，那么也要删除其包含的二级科室
-    ReturnMessage deleteDept(int id);
+    ReturnMessage deleteDept(int id[]);
     //通过id查询科室
     Dept getDeptById(Integer id);
 }

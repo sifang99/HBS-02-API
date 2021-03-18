@@ -5,10 +5,13 @@ import com.sifang.mapper.UserLoginMapper;
 import com.sifang.pojo.ReturnMessage;
 import com.sifang.pojo.UserLogin;
 import com.sifang.service.UserService;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -32,42 +35,53 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ReturnMessage userLogin(String account, String pwd) {
+    public Map<String, Object> userLogin(String account, String pwd) {
         char c = account.charAt(0);
-        ReturnMessage returnMessage = new ReturnMessage();
         UserLogin userLogin;
+        Map<String, Object> result = new HashMap<>();
 
         //判断用户是通过昵称进行登录，还是通过电话号码进行登录
-        if (this.isNickname(account) ==1){ //如果用户通过昵称进行登录
+        if (this.isNickname(account) == 1){ //如果用户通过昵称进行登录
             if (this.checkNickname(account)){//检查昵称是否符合规范
                 userLogin = this.getUserByNickname(account);
             }else{
-                returnMessage.setIsSuccess(1);
-                returnMessage.setMessage("账号不存在！");
-                return returnMessage;//账号不存在
+                result.put("message", "账号错误！");
+                result.put("isLogin", false);
+                return result;
             }
         }else if(this.isNickname(account) == 2){//如果用户通过电话号码进行登录
             if (this.checkTel(account)){//检查电话号码是否合法
                 userLogin = this.getUserByTel(account);
             }else{
-                returnMessage.setIsSuccess(1);
-                returnMessage.setMessage("账号不存在！");
-                return returnMessage;//账号不存在
+                result.put("message", "账号错误！");
+                result.put("isLogin", false);
+                return result;
             }
         }else{
-            returnMessage.setIsSuccess(1);
-            returnMessage.setMessage("账号不存在！");
-            return returnMessage;//账号不存在
+            result.put("message", "账号错误！");
+            result.put("isLogin", false);
+            return result;
         }
+        if (userLogin != null){
+            if (userLogin.getPwd().equals(pwd)){
+                result.put("isLogin", true);
+                result.put("message", "登录成功！");
+                Map<String, Object> user = new HashMap<>();
 
-        if (userLogin.getPwd().equals(pwd)){
-            returnMessage.setIsSuccess(0);
-            returnMessage.setMessage("登陆成功！");
-            return returnMessage;//登录成功
-        }else {
-            returnMessage.setIsSuccess(2);
-            returnMessage.setMessage("密码错误！");
-            return returnMessage;//账号正确，密码错误
+                user.put("id", userLogin.getId());
+                user.put("tel", userLogin.getTel());
+                user.put("nickname", userLogin.getNickname());
+                result.put("user", user);
+                return result;//登录成功
+            }else {
+                result.put("isLogin", false);
+                result.put("message","密码错误！");
+                return result;//账号正确，密码错误
+            }
+        }else{
+            result.put("isLogin", false);
+            result.put("message", "账号不存在！");
+            return result;
         }
     }
 

@@ -16,4 +16,8 @@
         delete from patient_message where account = #{account}
     </delete>
 
+    <select id="getPatientListByUserId" resultType="PatientMessage">
+        select * from patient_message where user_id = #{userId}
+    </select>
+
 </mapper>

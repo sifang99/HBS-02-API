@@ -24,7 +24,7 @@ public class UserLoginController {
 
     //用户登录
     @RequestMapping("/userLogin")
-    public ReturnMessage login(@RequestBody Map<String, String> login){
+    public Map<String, Object> login(@RequestBody Map<String, String> login){
         return userService.userLogin(login.get("account"), login.get("pwd"));
     }
 

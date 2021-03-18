@@ -7,6 +7,8 @@ import com.sifang.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PatientServiceImpl implements PatientService {
 
@@ -50,5 +52,10 @@ public class PatientServiceImpl implements PatientService {
             returnMessage.setMessage("删除失败！");
         }
         return returnMessage;
+    }
+
+    @Override
+    public List<PatientMessage> getPatientListByUserId(int userId) {
+        return this.patientMessageMapper.getPatientListByUserId(userId);
     }
 }

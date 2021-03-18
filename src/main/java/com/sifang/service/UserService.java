@@ -4,6 +4,7 @@ import com.sifang.pojo.ReturnMessage;
 import com.sifang.pojo.UserLogin;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
     //获得所有用户
@@ -13,7 +14,7 @@ public interface UserService {
     //根据电话号码查询用户
     UserLogin getUserByTel(String tel);
     //用户登录
-    ReturnMessage userLogin(String account, String pwd);
+    Map<String, Object> userLogin(String account, String pwd);
     //检查nickname是否符合规范
     boolean checkNickname(String nickname);
     //检查tel是否符合规范

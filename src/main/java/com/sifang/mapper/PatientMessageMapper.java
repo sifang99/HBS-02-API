@@ -13,4 +13,5 @@ public interface PatientMessageMapper {
     int updatePatient(PatientMessage patientMessage);
     int deletePatientByAccount(String account);
     List<PatientMessage> getPatientListByUserId(int userId);
+    PatientMessage getPatientByAccount(String account);
 }

@@ -38,4 +38,20 @@
     <delete id="deleteNumberById" parameterType="int">
         delete from number_manage where id=#{id}
     </delete>
+
+    <select id="searchNumber" resultType="NumberMessage">
+        select * from number_manage where doctor_num=#{doctorNum} and number_date=#{numberDate}
+    </select>
+
+    <select id="getNumberById" resultType="NumberMessage" parameterType="int">
+        select * from number_manage where id = #{id}
+    </select>
+
+    <update id="order" parameterType="int">
+        update number_manage set remain = remain - 1 where id = #{id}
+    </update>
+
+    <update id="setStatus" parameterType="int">
+        update number_manage set status = #{status} where id = #{numberId}
+    </update>
 </mapper>

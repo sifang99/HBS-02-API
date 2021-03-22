@@ -82,4 +82,9 @@ public class NumberMessageController {
         return this.numberMessageService.getNumberByDocDate(doctorNum, date);
     }
 
+    @GetMapping("/getNumberMessage")
+    public NumberMessage getNumberMessage(String doctorNum, Date date){
+        return this.numberMessageService.searchNumber(doctorNum, date);
+    }
+
 }

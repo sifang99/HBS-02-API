@@ -12,12 +12,11 @@ import java.sql.Date;
 public class OrderMessage {
     private int id;
     private String patientID;
-    private String doctorNum;
-    private String dept;
-    private Date day;
-    private String time;
-    private String place;
-    private int fee;
+    private int dept;
+    private String detailTime;
     private int status;
-    private int sequence;
+    private int numSequence;
+    private Date orderDate;
+    private int numberId;
+    private int userId;
 }

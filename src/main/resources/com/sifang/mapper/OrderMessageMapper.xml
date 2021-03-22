@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sifang.mapper.OrderMessageMapper">
+    <select id="getOrderMessageByNumberId" resultType="OrderMessage">
+        select * from order_message where number_id = #{numberId}
+    </select>
+
+    <insert id="addOrderMessage" parameterType="OrderMessage">
+        insert into
+            order_message(patient_ID, dept,detail_time , num_sequence, order_date, user_id, number_id, status)
+            values (#{patientID}, #{dept}, #{detailTime}, #{numSequence}, #{orderDate}, #{userId}, #{numberId}, #{status})
+
+    </insert>
+
+    <select id="getOrderMessageByUserId" parameterType="int" resultType="OrderMessage">
+        select * from order_message where user_id = #{userId}
+    </select>
+
+    <update id="returnNumber" parameterType="int">
+        update order_message set status = 1 where id = #{id}
+    </update>
+
+    <select id="getOrderMessageById" parameterType="int" resultType="OrderMessage">
+        select * from order_message where id = #{id}
+    </select>
+
+    <select id="getOrderMessageByAccount" resultType="OrderMessage">
+        select * from order_message
+            where patient_ID = #{account} and detail_time like '%${numberDate}%'
+    </select>
+</mapper>

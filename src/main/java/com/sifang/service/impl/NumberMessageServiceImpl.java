@@ -124,6 +124,11 @@ public class NumberMessageServiceImpl implements NumberMessageService {
     }
 
     @Override
+    public NumberMessage searchNumber(String doctorNum, Date numberDate) {
+        return this.numberMessageMapper.searchNumber(doctorNum, numberDate);
+    }
+
+    @Override
     public List<NumberMessage> getUsefulNumberByDoctor(String doctorNum) {
         List<NumberMessage> numberMessageLinkedList = this.numberMessageMapper.getNumberByDoctor(doctorNum);
         int length = numberMessageLinkedList.size();
@@ -213,5 +218,33 @@ public class NumberMessageServiceImpl implements NumberMessageService {
             doctorList.add(this.doctorService.getDoctorByNum(doctorNum));
         }
         return doctorList;
+    }
+
+    @Override
+    public NumberMessage getNumberById(int id) {
+        return this.numberMessageMapper.getNumberById(id);
+    }
+
+    @Override
+    public ReturnMessage order(int numberId) {
+        NumberMessage numberMessage = this.numberMessageMapper.getNumberById(numberId);
+        int remain = numberMessage.getRemain();
+        ReturnMessage returnMessage = new ReturnMessage();
+        if (remain > 0){
+            if(this.numberMessageMapper.order(numberId) >=1){
+                if (remain == 1){
+                    this.numberMessageMapper.setStatus(1, numberId);
+                }
+                returnMessage.setIsSuccess(0);
+                returnMessage.setMessage("预约成功！");
+            }else{
+                returnMessage.setIsSuccess(1);
+                returnMessage.setMessage("预约失败！");
+            }
+        }else{
+            returnMessage.setIsSuccess(1);
+            returnMessage.setMessage("已约满！");
+        }
+        return returnMessage;
     }
 }

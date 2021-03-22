@@ -58,4 +58,9 @@ public class PatientServiceImpl implements PatientService {
     public List<PatientMessage> getPatientListByUserId(int userId) {
         return this.patientMessageMapper.getPatientListByUserId(userId);
     }
+
+    @Override
+    public PatientMessage getPatientByAccount(String account) {
+        return this.patientMessageMapper.getPatientByAccount(account);
+    }
 }

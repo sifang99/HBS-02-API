@@ -65,7 +65,10 @@ public class UserLoginController {
 
     //用户修改密码
     @RequestMapping("/userUpdatePwd")
-    public ReturnMessage updatePwd(String account, String oldPwd, String newPwd){
+    public ReturnMessage updatePwd(@RequestBody Map<String, String> data){
+        String account = data.get("account");
+        String oldPwd = data.get("oldPwd");
+        String newPwd = data.get("newPwd");
         return userService.updatePwd(account, oldPwd, newPwd);
     }
 }

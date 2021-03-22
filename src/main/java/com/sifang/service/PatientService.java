@@ -12,4 +12,5 @@ public interface PatientService {
     //通过身份证号删除患者信息
     ReturnMessage deletePatientByAccount(String account);
     List<PatientMessage> getPatientListByUserId(int userId);
+    PatientMessage getPatientByAccount(String account);
 }

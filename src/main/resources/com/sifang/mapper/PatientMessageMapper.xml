@@ -20,4 +20,7 @@
         select * from patient_message where user_id = #{userId}
     </select>
 
+    <select id="getPatientByAccount" parameterType="String" resultType="PatientMessage">
+        select * from patient_message where account = #{account}
+    </select>
 </mapper>

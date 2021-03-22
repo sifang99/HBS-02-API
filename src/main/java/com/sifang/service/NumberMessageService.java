@@ -14,8 +14,10 @@ public interface NumberMessageService {
     public ReturnMessage addNumberMessage(Map<String, Object> schedules);
     //根据科室id、日期查询可预约信息
     public List<NumberMessage> getNumber(int dept, Date date);
-    //根据医生编号、日期判断医生是否已排班，并返回排班信息
+    //根据医生编号、日期判断医生是否已排班，并返回排班信息 这里返回的是List
     NumberMessage  getNumberByDocDate(String doctorNumber, Date numberDate);
+
+    NumberMessage searchNumber(String doctorNum, Date numberDate);
     //根据医生编号查询排班信息,只返回号源状态为可预约、已约满状态的号源
     List<NumberMessage> getUsefulNumberByDoctor(String doctorNum);
     ReturnMessage updateNumberById(NumberMessage numberMessage);
@@ -27,4 +29,8 @@ public interface NumberMessageService {
     Map<String, Integer>[]  getFutureDate();
     //根据科室id、日期获得有排班的医生信息
     List<Doctor> getDoctorsByDeptDate(int dept, Date date);
+    //根据号源id搜索号源信息
+    NumberMessage getNumberById(int id);
+    //预约操作时，号源的可预约数减少
+    ReturnMessage order(int numberId);
 }

@@ -15,11 +15,14 @@ public interface NumberMessageService {
     //根据科室id、日期查询可预约信息
     public List<NumberMessage> getNumber(int dept, Date date);
     //根据医生编号、日期判断医生是否已排班，并返回排班信息 这里返回的是List
-    NumberMessage  getNumberByDocDate(String doctorNumber, Date numberDate);
+    List<NumberMessage>  getNumberListByDocDate(String doctorNumber, Date numberDate);
+    //根据医生编号、日期判断医生是否已排班，并返回排班信息 这里返回的是NumberMessage
 
     NumberMessage searchNumber(String doctorNum, Date numberDate);
     //根据医生编号查询排班信息,只返回号源状态为可预约、已约满状态的号源
     List<NumberMessage> getUsefulNumberByDoctor(String doctorNum);
+    //根据医生编号查询排班信息，且只返回号源状态为可预约、已约满、停诊状态的号源，（停诊服务）
+    List<NumberMessage> getNumberListByDoctor(String doctorNum);
     ReturnMessage updateNumberById(NumberMessage numberMessage);
     //根据科室id以及日期，返回处于停诊、已过期状态的号源
     List<NumberMessage> getNumberByDeptDate(int dept, Date date);
@@ -33,4 +36,8 @@ public interface NumberMessageService {
     NumberMessage getNumberById(int id);
     //预约操作时，号源的可预约数减少
     ReturnMessage order(int numberId);
+    //定时更新号源信息
+    ReturnMessage autoupdate();
+    //更新号源信息
+    int updateStatus(int status, int numberId);
 }

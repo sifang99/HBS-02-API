@@ -38,18 +38,18 @@ public class DoctorController {
         ReturnMessage returnMessage ;
         //添加医生
         returnMessage = doctorService.addDoctor(doctor);
-        if (returnMessage.getIsSuccess() == 0){
-            //医生添加成功后，为医生注册登陆账号
-            WorkerLogin workerLogin = new WorkerLogin();
-            workerLogin.setNum(doctor.getNum());
-            workerLogin.setPwd(doctor.getNum());
-            if (workerService.addWorker(workerLogin).getIsSuccess() == 0){
-                returnMessage.setMessage("添加成功！");
-            }else{
-                returnMessage.setIsSuccess(1);
-                returnMessage.setMessage("添加医生登录账号失败！");
-            }
-        }
+//        if (returnMessage.getIsSuccess() == 0){
+//            //医生添加成功后，为医生注册登陆账号
+//            WorkerLogin workerLogin = new WorkerLogin();
+//            workerLogin.setNum(doctor.getNum());
+//            workerLogin.setPwd(doctor.getNum());
+//            if (workerService.addWorker(workerLogin).getIsSuccess() == 0){
+//                returnMessage.setMessage("添加成功！");
+//            }else{
+//                returnMessage.setIsSuccess(1);
+//                returnMessage.setMessage("添加医生登录账号失败！");
+//            }
+//        }
         return returnMessage;
     }
 

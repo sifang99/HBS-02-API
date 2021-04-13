@@ -15,7 +15,8 @@ public interface NumberMessageMapper {
     int addNumberMessage(NumberMessage numberMessage);
     //通过科室以及日期获得号源信息
     LinkedList<NumberMessage> getNumberByDept(int dept, Date numberDate);
-    //通过医生编号、日期获得未来的号源信息
+    //通过医生编号、日期获得未来的号源信息,范返回值为List
+    List<NumberMessage> getNumberListByDocDate(String doctorNum, Date numberDate);
     NumberMessage getNumberByDocDate(String doctorNum, Date numberDate);
     //通过医生编号，日期获得当天的号源信息
     NumberMessage searchNumber(String doctorNum, Date numberDate);

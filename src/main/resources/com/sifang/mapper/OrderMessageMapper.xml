@@ -13,7 +13,7 @@
     </insert>
 
     <select id="getOrderMessageByUserId" parameterType="int" resultType="OrderMessage">
-        select * from order_message where user_id = #{userId}
+        select * from order_message where user_id = #{userId} order by order_date desc
     </select>
 
     <update id="returnNumber" parameterType="int">
@@ -28,4 +28,8 @@
         select * from order_message
             where patient_ID = #{account} and detail_time like '%${numberDate}%'
     </select>
+
+    <update id="setStatus" parameterType="int">
+        update order_message set status = #{status} where number_id = #{numberId}
+    </update>
 </mapper>

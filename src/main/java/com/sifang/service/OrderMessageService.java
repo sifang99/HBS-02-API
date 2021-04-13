@@ -11,6 +11,8 @@ public interface OrderMessageService {
     List<Map<String, String>> getOrderList(String doctorNum, String dateStr);
     List<OrderMessage> getNumberSequencebyId(int numberId);
     ReturnMessage addOrderMessage(OrderMessage orderMessage);
+    //返回预约记录
     List<Map<String, String>> getOrderRecord(int userId);
     ReturnMessage returnNumber(int id);
+    int setStatus(int status, int numberId);
 }

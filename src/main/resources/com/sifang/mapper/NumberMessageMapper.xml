@@ -16,7 +16,7 @@
         select * from number_manage where dept = #{dept} and number_date=#{numberDate}
     </select>
 
-    <select id="getNumberByDocDate" resultType="NumberMessage">
+    <select id="getNumberListByDocDate" resultType="NumberMessage">
         select * from number_manage where doctor_num = #{doctorNum} and number_date &gt;= #{numberDate}
     </select>
 

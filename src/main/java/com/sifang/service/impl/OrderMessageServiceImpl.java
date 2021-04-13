@@ -243,4 +243,9 @@ public class OrderMessageServiceImpl implements OrderMessageService {
         }
         return returnMessage;
     }
+
+    @Override
+    public int setStatus(int status, int numberId) {
+        return this.orderMessageMapper.setStatus(status, numberId);
+    }
 }

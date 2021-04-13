@@ -130,7 +130,7 @@ public class DoctorServiceImpl implements DoctorService {
     //辅助函数
     //判断医生是否已经排班
     boolean isArranged(String doctorNum, Date date){
-        if (this.numberMessageService.getNumberByDocDate(doctorNum, date) != null){
+        if (this.numberMessageService.getNumberListByDocDate(doctorNum, date).size() != 0){
             return  true;
         }else{
             return false;

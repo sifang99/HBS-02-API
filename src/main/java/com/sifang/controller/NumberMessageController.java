@@ -4,6 +4,7 @@ import com.sifang.pojo.Doctor;
 import com.sifang.pojo.NumberMessage;
 import com.sifang.pojo.ReturnMessage;
 import com.sifang.service.NumberMessageService;
+import com.sifang.service.OrderMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,8 @@ import java.util.Map;
 public class NumberMessageController {
     @Autowired
     private NumberMessageService numberMessageService;
+    @Autowired
+    OrderMessageService orderMessageService;
 
     @PostMapping("/addNumberMessage")
     public ReturnMessage addNumberMessage(@RequestBody Map<String, Object> schedules){
@@ -44,7 +47,7 @@ public class NumberMessageController {
         }
 
         Date day = Date.valueOf(dateStr);
-        return this.numberMessageService.getNumberByDocDate(doctorNum, day);
+        return this.numberMessageService.searchNumber(doctorNum, day);
     }
 
     @GetMapping("/getNumberByDoctor")
@@ -77,14 +80,28 @@ public class NumberMessageController {
         return this.numberMessageService.getDoctorsByDeptDate(dept, date);
     }
 
-    @GetMapping("/getNumber")
-    public NumberMessage getNumber(String doctorNum, Date date){
-        return this.numberMessageService.getNumberByDocDate(doctorNum, date);
-    }
-
     @GetMapping("/getNumberMessage")
     public NumberMessage getNumberMessage(String doctorNum, Date date){
         return this.numberMessageService.searchNumber(doctorNum, date);
     }
 
+    //返回某位医生的可预约、已约满、停诊状态的号源（停诊服务）
+    @GetMapping("/getNumber")
+    public List<NumberMessage> getNumber(String doctorNum){
+        return this.numberMessageService.getNumberListByDoctor(doctorNum);
+    }
+
+    @GetMapping("/stopTreatment")
+    public ReturnMessage stopTreatment(int numberId){
+        ReturnMessage returnMessage = new ReturnMessage();
+        if (this.numberMessageService.updateStatus(2, numberId) >= 1){
+            this.orderMessageService.setStatus(3, numberId);
+            returnMessage.setMessage("已停诊");
+            returnMessage.setIsSuccess(0);
+        }else{
+            returnMessage.setIsSuccess(1);
+            returnMessage.setMessage("停诊失败！");
+        }
+        return returnMessage;
+    }
 }

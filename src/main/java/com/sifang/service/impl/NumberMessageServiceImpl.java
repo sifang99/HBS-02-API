@@ -6,7 +6,9 @@ import com.sifang.pojo.NumberMessage;
 import com.sifang.pojo.ReturnMessage;
 import com.sifang.service.DoctorService;
 import com.sifang.service.NumberMessageService;
+import com.sifang.service.OrderMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,6 +23,8 @@ public class NumberMessageServiceImpl implements NumberMessageService {
     private NumberMessageMapper numberMessageMapper;
     @Autowired
     private DoctorService doctorService;
+    @Autowired
+    private OrderMessageService orderMessageService;
 
 
     @Transactional
@@ -80,48 +84,49 @@ public class NumberMessageServiceImpl implements NumberMessageService {
         return numberMessageList;
     }
 
-    public Map<String, Object> getNumberByDept(int dept) {
-        Calendar calendar = Calendar.getInstance();
-        java.sql.Date dateList[] = new java.sql.Date[7];
-        //获取未来7天的日期
-        for (int i = 0; i < 7; i++){
-            calendar.add(Calendar.DATE, 1);
-            String dateStr = String.valueOf(calendar.get(Calendar.YEAR));
-            int month = calendar.get(Calendar.MONTH) + 1;
-            if (month >= 10){
-                dateStr = dateStr + "-" + String.valueOf(month);
-            }else {
-                dateStr = dateStr + "-0" + String.valueOf(month);
-            }
-
-            int date = calendar.get(Calendar.DATE);
-            if (date >= 10){
-                dateStr = dateStr + "-" + String.valueOf(date);
-            }else{
-                dateStr = dateStr + "-0" + String.valueOf(date);
-            }
-            dateList[i] = Date.valueOf(dateStr);
-        }
-        //获得未来七天的号源信心
-        List<NumberMessage> numberMessageList = this.numberMessageMapper.getNumberByDept(26,dateList[0]);
-        numberMessageList.addAll(this.numberMessageMapper.getNumberByDept(26, dateList[1]));
-        numberMessageList.addAll(this.numberMessageMapper.getNumberByDept(26,dateList[2]));
-        numberMessageList.addAll(this.numberMessageMapper.getNumberByDept(26, dateList[3]));
-        numberMessageList.addAll(this.numberMessageMapper.getNumberByDept(26,dateList[4]));
-        numberMessageList.addAll(this.numberMessageMapper.getNumberByDept(26, dateList[5]));
-        numberMessageList.addAll(this.numberMessageMapper.getNumberByDept(26,dateList[6]));
-        System.out.println(numberMessageList);
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("dateList", dateList);
-        result.put("numberMessageList",numberMessageList);
-        return result;
-    }
+//    public Map<String, Object> getNumberByDept(int dept) {
+//        Calendar calendar = Calendar.getInstance();
+//        java.sql.Date dateList[] = new java.sql.Date[7];
+//        //获取未来7天的日期
+//        for (int i = 0; i < 7; i++){
+//            calendar.add(Calendar.DATE, 1);
+//            String dateStr = String.valueOf(calendar.get(Calendar.YEAR));
+//            int month = calendar.get(Calendar.MONTH) + 1;
+//            if (month >= 10){
+//                dateStr = dateStr + "-" + String.valueOf(month);
+//            }else {
+//                dateStr = dateStr + "-0" + String.valueOf(month);
+//            }
+//
+//            int date = calendar.get(Calendar.DATE);
+//            if (date >= 10){
+//                dateStr = dateStr + "-" + String.valueOf(date);
+//            }else{
+//                dateStr = dateStr + "-0" + String.valueOf(date);
+//            }
+//            dateList[i] = Date.valueOf(dateStr);
+//        }
+//        //获得未来七天的号源信心
+//        List<NumberMessage> numberMessageList = this.numberMessageMapper.getNumberByDept(26,dateList[0]);
+//        numberMessageList.addAll(this.numberMessageMapper.getNumberByDept(26, dateList[1]));
+//        numberMessageList.addAll(this.numberMessageMapper.getNumberByDept(26,dateList[2]));
+//        numberMessageList.addAll(this.numberMessageMapper.getNumberByDept(26, dateList[3]));
+//        numberMessageList.addAll(this.numberMessageMapper.getNumberByDept(26,dateList[4]));
+//        numberMessageList.addAll(this.numberMessageMapper.getNumberByDept(26, dateList[5]));
+//        numberMessageList.addAll(this.numberMessageMapper.getNumberByDept(26,dateList[6]));
+//        System.out.println(numberMessageList);
+//
+//        Map<String, Object> result = new HashMap<>();
+//        result.put("dateList", dateList);
+//        result.put("numberMessageList",numberMessageList);
+//        return result;
+//    }
 
     @Override
-    public NumberMessage  getNumberByDocDate(String doctorNumber, Date numberDate) {
-        return this.numberMessageMapper.getNumberByDocDate(doctorNumber, numberDate);
+    public List<NumberMessage> getNumberListByDocDate(String doctorNumber, Date numberDate) {
+        return this.numberMessageMapper.getNumberListByDocDate(doctorNumber, numberDate);
     }
+
 
     @Override
     public NumberMessage searchNumber(String doctorNum, Date numberDate) {
@@ -135,6 +140,21 @@ public class NumberMessageServiceImpl implements NumberMessageService {
         for (int i = 0; i < length; i++){
             int status = numberMessageLinkedList.get(i).getStatus();
             if (status == 2 || status == 3){
+                numberMessageLinkedList.remove(i);
+                length --;
+                i--;
+            }
+        }
+        return numberMessageLinkedList;
+    }
+
+    @Override
+    public List<NumberMessage> getNumberListByDoctor(String doctorNum) {
+        List<NumberMessage> numberMessageLinkedList = this.numberMessageMapper.getNumberByDoctor(doctorNum);
+        int length = numberMessageLinkedList.size();
+        for (int i = 0; i < length; i++){
+            int status = numberMessageLinkedList.get(i).getStatus();
+            if (status == 3){
                 numberMessageLinkedList.remove(i);
                 length --;
                 i--;
@@ -246,5 +266,46 @@ public class NumberMessageServiceImpl implements NumberMessageService {
             returnMessage.setMessage("已约满！");
         }
         return returnMessage;
+    }
+
+    @Override
+    public ReturnMessage autoupdate() {
+        List<NumberMessage> numberMessageList = this.numberMessageMapper.getNumerMessageList();
+        int length = numberMessageList.size();
+        //获得今天的日期
+        Calendar calendar = Calendar.getInstance();
+        String dateStr = String.valueOf(calendar.get(Calendar.YEAR));
+        int month = calendar.get(Calendar.MONTH) + 1;
+        if (month >= 10){
+            dateStr = dateStr + "-" + String.valueOf(month);
+        }else {
+            dateStr = dateStr + "-0" + String.valueOf(month);
+        }
+
+        int date = calendar.get(Calendar.DATE);
+        if (date >= 10){
+            dateStr = dateStr + "-" + String.valueOf(date);
+        }else{
+            dateStr = dateStr + "-0" + String.valueOf(date);
+        }
+
+        Date day = Date.valueOf(dateStr);
+        //更新号源表信息
+        for (int i = 0; i < length; i++){
+            NumberMessage numberMessage = numberMessageList.get(i);
+            if (numberMessage.getStatus() == 0 || numberMessage.getStatus() == 1){
+                if (day.compareTo(numberMessage.getNumberDate()) == 1){
+                    this.updateStatus(3, numberMessage.getId());
+                    //更新预约信息表
+                    this.orderMessageService.setStatus(4, numberMessage.getId());
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public int updateStatus(int status, int numberId) {
+        return this.numberMessageMapper.setStatus(status, numberId);
     }
 }

@@ -40,4 +40,6 @@ public interface NumberMessageService {
     ReturnMessage autoupdate();
     //更新号源信息
     int updateStatus(int status, int numberId);
+    //退号时，号源的可预约数增加
+    int retreat(int id);
 }

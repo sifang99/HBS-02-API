@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -32,5 +33,15 @@ public class AttentionController {
     @GetMapping("/deleteAttention")
     public ReturnMessage deleteAttention(int id[]){
         return  attentionService.deleteAttention(id);
+    }
+
+    @GetMapping("/getAttentionList")
+    public List<Map<String, Object>> getAttentionList(){
+        return attentionService.getAllAttentions();
+    }
+
+    @GetMapping("/getAttentionById")
+    public Attention getAttentionById(int id){
+        return attentionService.getAttentionById(id);
     }
 }

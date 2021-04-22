@@ -2,10 +2,8 @@ package com.sifang.service.impl;
 
 import com.sifang.mapper.OrderMessageMapper;
 import com.sifang.pojo.*;
-import com.sifang.service.DoctorService;
-import com.sifang.service.NumberMessageService;
-import com.sifang.service.OrderMessageService;
-import com.sifang.service.PatientService;
+import com.sifang.service.*;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +20,8 @@ public class OrderMessageServiceImpl implements OrderMessageService {
     private PatientService patientService;
     @Autowired
     private DoctorService doctorService;
+    @Autowired
+    private DeptService deptService;
     static int count = 1;
 
     @Override
@@ -111,7 +111,7 @@ public class OrderMessageServiceImpl implements OrderMessageService {
             for (int j = 0; j < b; j++){
                 int numSe = numberSequence.get(j).getNumSequence();
                 int status = numberSequence.get(j).getStatus();
-                if (resultSequence == numSe && (status == 0 || status == 1 || status == 3)){
+                if (resultSequence == numSe && (status == 0 || status == 1 || status == 5)){
                     result.remove(i);
                     a--;
                     i--;
@@ -198,6 +198,7 @@ public class OrderMessageServiceImpl implements OrderMessageService {
             result.put("gender", "" +patientMessage.getGender());
             result.put("status", "" + orderMessageList.get(i).getStatus());
             result.put("id", ""+orderMessageList.get(i).getId());
+            result.put("doctorNum", doctor.getNum());
 
             resultList.add(result);
         }
@@ -247,5 +248,83 @@ public class OrderMessageServiceImpl implements OrderMessageService {
     @Override
     public int setStatus(int status, int numberId) {
         return this.orderMessageMapper.setStatus(status, numberId);
+    }
+
+    @Override
+    public List<Map<String, Object>> getCheckList() {
+        List<OrderMessage> orderMessageList = this.orderMessageMapper.getCheckList();
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        int length = orderMessageList.size();
+        for (int i = 0; i < length; i++){
+            Map<String, Object> result = new HashMap<>();
+            OrderMessage orderMessage = orderMessageList.get(i);
+            String dept = deptService.getDeptById(orderMessage.getDept()).getName();
+            NumberMessage numberMessage = numberMessageService.getNumberById(orderMessage.getNumberId());
+            String date = numberMessage.getNumberDate().toString();
+            String doctorNum = numberMessage.getDoctorNum();
+            String doctorName = doctorService.getDoctorByNum(doctorNum).getName();
+            String patientID = orderMessage.getPatientID();
+            String patientName = patientService.getPatientByAccount(patientID).getName();
+            int orderID = orderMessage.getId();
+            int numberID = orderMessage.getNumberId();
+            result.put("dept",dept);
+            result.put("date", date);
+            result.put("doctorNum", doctorNum);
+            result.put("doctorName", doctorName);
+            result.put("patientID", patientID);
+            result.put("patientName", patientName);
+            result.put("orderID", orderID);
+            result.put("numberID", numberID);
+            resultList.add(result);
+        }
+        return resultList;
+    }
+
+    @Override
+    public ReturnMessage agreeRetreat(List<Map<String, Integer>> params) {
+        int length = params.size();
+        System.out.println(params);
+
+        int count = 0;
+        ReturnMessage returnMessage = new ReturnMessage();
+        for (int i = 0; i < length; i++){
+            Map<String, Integer> param = params.get(i);
+            System.out.println(param);
+            System.out.println(param.get("orderID"));
+            System.out.println(param.get("numberID"));
+            int orderReturn = this.orderMessageMapper.setStatusById(2, param.get("orderID"));
+            int numberReturn = this.numberMessageService.retreat(param.get("numberID"));
+            if (orderReturn + numberReturn >= 2){
+                count++;
+            }
+        }
+        if (count == length){
+            returnMessage.setMessage("退号成功！");
+            returnMessage.setIsSuccess(0);
+        }else{
+            returnMessage.setIsSuccess(1);
+            returnMessage.setMessage("退号失败！");
+        }
+        return returnMessage;
+    }
+
+    @Override
+    public ReturnMessage disagreeRetreat(int[] params) {
+        int length = params.length;
+        int count = 0;
+        ReturnMessage returnMessage = new ReturnMessage();
+        for(int i = 0; i < length; i++){
+            if (this.orderMessageMapper.setStatusById(5, params[i]) >= 1){
+                count ++;
+            }
+        }
+        if (count == length){
+            returnMessage.setMessage("操作成功");
+            returnMessage.setIsSuccess(0);
+        }else{
+            returnMessage.setIsSuccess(1);
+            returnMessage.setMessage("操作失败");
+        }
+        return returnMessage;
     }
 }

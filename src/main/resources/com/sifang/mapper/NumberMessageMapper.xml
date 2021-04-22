@@ -54,4 +54,8 @@
     <update id="setStatus" parameterType="int">
         update number_manage set status = #{status} where id = #{numberId}
     </update>
+
+    <update id="retreat" parameterType="int">
+        update number_manage set remain = remain + 1 where id = #{id}
+    </update>
 </mapper>

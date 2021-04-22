@@ -308,4 +308,9 @@ public class NumberMessageServiceImpl implements NumberMessageService {
     public int updateStatus(int status, int numberId) {
         return this.numberMessageMapper.setStatus(status, numberId);
     }
+
+    @Override
+    public int retreat(int id) {
+        return this.numberMessageMapper.retreat(id);
+    }
 }

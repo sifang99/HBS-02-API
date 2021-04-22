@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AttentionServiceImpl implements AttentionService {
@@ -69,5 +72,25 @@ public class AttentionServiceImpl implements AttentionService {
     public List<Attention> getAttentionList(Date publishDay) {
         System.out.println(publishDay);
         return attentionMapper.getAttentionListByDate(publishDay);
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllAttentions() {
+        List<Attention> attentionList = this.attentionMapper.getAttentionList();
+        int length = attentionList.size();
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        for (int i = 0; i < length; i++){
+            Map<String, Object> result = new HashMap<>();
+            result.put("id", attentionList.get(i).getId());
+            result.put("title", attentionList.get(i).getTitle());
+            result.put("publishDay", attentionList.get(i).getPublishDay());
+            resultList.add(result);
+        }
+        return resultList;
+    }
+
+    @Override
+    public Attention getAttentionById(int id) {
+        return this.attentionMapper.getAttentionById(id);
     }
 }

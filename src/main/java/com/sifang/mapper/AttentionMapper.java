@@ -14,4 +14,6 @@ public interface AttentionMapper {
     int updateAttention(Attention attention);
     int deleteAttention(int id);
     List<Attention> getAttentionListByDate(Date publishDay);
+    List<Attention> getAttentionList();
+    Attention getAttentionById(int id);
 }

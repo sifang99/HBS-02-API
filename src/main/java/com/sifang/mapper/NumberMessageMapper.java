@@ -31,4 +31,6 @@ public interface NumberMessageMapper {
     //预约
     int order(int numberId);
     int setStatus(int status, int numberId);
+    //退号
+    int retreat(int numberId);
 }

@@ -18,4 +18,12 @@
         select * from attention where publish_day = #{publishDay}
     </select>
 
+    <select id="getAttentionList" resultType="Attention">
+        select * from attention order by publish_day desc
+    </select>
+
+    <select id="getAttentionById" resultType="Attention">
+        select * from attention where id = #{id}
+    </select>
+
 </mapper>

@@ -29,7 +29,15 @@
             where patient_ID = #{account} and detail_time like '%${numberDate}%'
     </select>
 
+    <select id="getCheckList" resultType="OrderMessage">
+        select * from order_message where status = 1
+    </select>
+
     <update id="setStatus" parameterType="int">
         update order_message set status = #{status} where number_id = #{numberId}
+    </update>
+
+    <update id="setStatusById" parameterType="int">
+        update order_message set status = #{status} where id = #{id}
     </update>
 </mapper>

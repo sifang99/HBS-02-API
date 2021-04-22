@@ -6,6 +6,7 @@ import com.sifang.service.OrderMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,5 +34,20 @@ public class OrderMessageController {
     @GetMapping("/returnOrder")
     public ReturnMessage returnMessage(int id){
         return this.orderMessageService.returnNumber(id);
+    }
+
+    @GetMapping("/getCheckList")
+    public List<Map<String, Object>> getCheckList(){
+        return this.orderMessageService.getCheckList();
+    }
+
+    @PostMapping("/agreeRetreat")
+    public ReturnMessage agreeRetreat(@RequestBody ArrayList<Map<String, Integer>> params){
+        return this.orderMessageService.agreeRetreat(params);
+    }
+
+    @PostMapping("/disagreeRetreat")
+    public ReturnMessage disagreeRetreat(@RequestBody int [] params){
+        return this.orderMessageService.disagreeRetreat(params);
     }
 }

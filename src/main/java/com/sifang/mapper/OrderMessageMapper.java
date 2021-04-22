@@ -17,4 +17,6 @@ public interface OrderMessageMapper {
     //获取某位患者在同一天中的预约信息
     List<OrderMessage> getOrderMessageByAccount(String account, String numberDate);
     int setStatus(int status, int numberId);
+    List<OrderMessage> getCheckList();
+    int setStatusById(int status, int id);
 }

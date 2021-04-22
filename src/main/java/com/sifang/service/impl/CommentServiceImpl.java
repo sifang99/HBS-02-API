@@ -7,6 +7,8 @@ import com.sifang.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CommentServiceImpl implements CommentService {
     @Autowired
@@ -37,5 +39,10 @@ public class CommentServiceImpl implements CommentService {
             returnMessage.setMessage("删除失败！");
         }
         return returnMessage;
+    }
+
+    @Override
+    public List<Comment> getCommentsByDoctorNum(String doctorNum) {
+        return this.commentMapper.getCommentsByDoctorNum(doctorNum);
     }
 }

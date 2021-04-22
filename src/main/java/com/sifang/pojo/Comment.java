@@ -12,8 +12,7 @@ import java.sql.Date;
 public class Comment {
     private int id;
     private String writer;
-    private Date date;
-    private int role;
+    private Date commentDate;
     private String comment;
     private String doctorNum;
 }

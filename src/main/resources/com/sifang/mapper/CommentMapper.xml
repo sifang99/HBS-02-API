@@ -3,10 +3,14 @@
 <mapper namespace="com.sifang.mapper.CommentMapper">
 
     <insert id="addComment" parameterType="Comment">
-        insert into comment(writer,date,role,comment,doctor_num) values (#{writer},#{date},#{role},#{comment},#{doctorNum})
+        insert into comment(writer,comment_date,comment,doctor_num) values (#{writer},#{commentDate},#{comment},#{doctorNum})
     </insert>
 
     <delete id="deleteComment" parameterType="int">
         delete from comment where id=#{id}
     </delete>
+
+    <select id="getCommentsByDoctorNum" parameterType="String" resultType="Comment">
+        select * from comment where doctor_num = #{doctorNum}
+    </select>
 </mapper>

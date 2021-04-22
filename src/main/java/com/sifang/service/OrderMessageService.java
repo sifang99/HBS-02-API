@@ -15,4 +15,7 @@ public interface OrderMessageService {
     List<Map<String, String>> getOrderRecord(int userId);
     ReturnMessage returnNumber(int id);
     int setStatus(int status, int numberId);
+    List<Map<String, Object>> getCheckList();
+    ReturnMessage agreeRetreat(List<Map<String, Integer>> params);
+    ReturnMessage disagreeRetreat(int[] params);
 }

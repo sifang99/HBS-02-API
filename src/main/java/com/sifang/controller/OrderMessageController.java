@@ -16,6 +16,7 @@ public class OrderMessageController {
     @Autowired
     private OrderMessageService orderMessageService;
 
+    //实现分时段就诊预约
     @GetMapping("/getOrderMessage")
     public List<Map<String, String>> getOrderMessage(String doctorNum, String date){
         return orderMessageService.getOrderList(doctorNum, date);

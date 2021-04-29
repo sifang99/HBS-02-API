@@ -50,4 +50,9 @@ public class WorkerServiceImpl implements WorkerService {
         }
         return returnMessage;
     }
+
+    @Override
+    public WorkerLogin getByNum(String num) {
+        return workerLoginMapper.getByNum(num);
+    }
 }

@@ -3,6 +3,8 @@ package com.sifang.controller;
 import com.sifang.pojo.PatientMessage;
 import com.sifang.pojo.ReturnMessage;
 import com.sifang.service.PatientService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,11 +22,6 @@ public class PatientMessageController {
         return patientService.addPatient(patientMessage);
     }
 
-    //修改患者信息
-    @RequestMapping("/updatePatient")
-    public ReturnMessage updatePatient(@RequestBody PatientMessage patientMessage){
-        return patientService.updatePatient(patientMessage);
-    }
     //查询就诊人基本信息
     @GetMapping("/getPatient")
     public List<PatientMessage> getPatientListByUserId(int userId){

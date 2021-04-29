@@ -53,12 +53,6 @@ public class DoctorController {
         return returnMessage;
     }
 
-    //医生修改密码
-    @RequestMapping("/doctorUpdatePwd")
-    public ReturnMessage updatePwd(String num, String pwd){
-        return workerService.updatePwd(num, pwd);
-    }
-
     //修改医生信息
     @RequestMapping("/updateDoctor")
     public ReturnMessage updateDoctor(@RequestBody Doctor doctor){

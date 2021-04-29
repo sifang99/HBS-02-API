@@ -12,6 +12,7 @@ public interface UserLoginMapper {
     List<UserLogin> getAllUser();
     UserLogin getUserByNickname(String nickname);
     UserLogin getUserByTel(String tel);
+    UserLogin getUserById(int userId);
     int addUser(String tel, String nickname, String pwd);
     int updatePwdByTel(String tel, String pwd);
     int updatePwdByNickname(String nickname, String pwd);

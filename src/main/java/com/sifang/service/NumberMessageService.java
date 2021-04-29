@@ -17,7 +17,6 @@ public interface NumberMessageService {
     //根据医生编号、日期判断医生是否已排班，并返回排班信息 这里返回的是List
     List<NumberMessage>  getNumberListByDocDate(String doctorNumber, Date numberDate);
     //根据医生编号、日期判断医生是否已排班，并返回排班信息 这里返回的是NumberMessage
-
     NumberMessage searchNumber(String doctorNum, Date numberDate);
     //根据医生编号查询排班信息,只返回号源状态为可预约、已约满状态的号源
     List<NumberMessage> getUsefulNumberByDoctor(String doctorNum);

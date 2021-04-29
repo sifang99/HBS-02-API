@@ -19,7 +19,7 @@ public interface DoctorService {
     ReturnMessage deleteDoctorByNum(String num);
     //通过科室id获取医生列表,并返回医生是否排班
     List<Map<String, Object>> getDoctorsByDept(int dept);
-    //通过科室id获取医生列表
+    //通过科室id获取医生列表,患者通过此函数了解专家信息
     List<Doctor> getDoctorListByDept(int dept);
     //通过num查询医生
     Doctor getDoctorByNum(String doctorNum);

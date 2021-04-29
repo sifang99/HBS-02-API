@@ -35,6 +35,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserLogin getUserById(int userId) {
+        return userLoginMapper.getUserById(userId);
+    }
+
+    @Override
     public Map<String, Object> userLogin(String account, String pwd) {
         char c = account.charAt(0);
         UserLogin userLogin;

@@ -14,4 +14,7 @@
         delete from worker_login where num = #{num}
     </delete>
 
+    <select id="getByNum" parameterType="String" resultType="WorkerLogin">
+        select * from worker_login where num=#{num}
+    </select>
 </mapper>

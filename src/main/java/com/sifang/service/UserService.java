@@ -13,6 +13,8 @@ public interface UserService {
     UserLogin getUserByNickname(String nickname);
     //根据电话号码查询用户
     UserLogin getUserByTel(String tel);
+    //根据用户id查询用户
+    UserLogin getUserById(int userId);
     //用户登录
     Map<String, Object> userLogin(String account, String pwd);
     //检查nickname是否符合规范

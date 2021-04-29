@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sifang.mapper.SysTokenMapper">
+    <insert id="add" parameterType="SysToken">
+        insert into sys_token (user_id, expire_time, token, update_time)
+        values (#{userId}, #{expireTime}, #{token}, #{updateTime});
+    </insert>
+
+    <select id="getTokenById" parameterType="int" resultType="SysToken">
+        select * from sys_token where user_id=#{userId}
+    </select>
+
+    <update id="update" parameterType="SysToken">
+        update sys_token
+        set expire_time = #{expireTime},update_time=#{updateTime},token=#{token}
+        where user_id=#{userId}
+    </update>
+
+    <select id="getByToken" parameterType="String" resultType="SysToken">
+        select * from sys_token where token=#{token}
+    </select>
+</mapper>

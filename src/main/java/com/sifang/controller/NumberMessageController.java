@@ -27,29 +27,30 @@ public class NumberMessageController {
         return this.numberMessageService.addNumberMessage(schedules);
     }
 
-    @GetMapping("/getNumberMessageByDoctorNum")
-    public NumberMessage getNumberMessage(String doctorNum){
-        //获得今天的日期
-        Calendar calendar = Calendar.getInstance();
-        String dateStr = String.valueOf(calendar.get(Calendar.YEAR));
-        int month = calendar.get(Calendar.MONTH) + 1;
-        if (month >= 10){
-            dateStr = dateStr + "-" + String.valueOf(month);
-        }else {
-            dateStr = dateStr + "-0" + String.valueOf(month);
-        }
+//    @GetMapping("/getNumberMessageByDoctorNum")
+//    public NumberMessage getNumberMessage(String doctorNum){
+//        //获得今天的日期
+//        Calendar calendar = Calendar.getInstance();
+//        String dateStr = String.valueOf(calendar.get(Calendar.YEAR));
+//        int month = calendar.get(Calendar.MONTH) + 1;
+//        if (month >= 10){
+//            dateStr = dateStr + "-" + String.valueOf(month);
+//        }else {
+//            dateStr = dateStr + "-0" + String.valueOf(month);
+//        }
+//
+//        int date = calendar.get(Calendar.DATE);
+//        if (date >= 10){
+//            dateStr = dateStr + "-" + String.valueOf(date);
+//        }else{
+//            dateStr = dateStr + "-0" + String.valueOf(date);
+//        }
+//
+//        Date day = Date.valueOf(dateStr);
+//        return this.numberMessageService.searchNumber(doctorNum, day);
+//    }
 
-        int date = calendar.get(Calendar.DATE);
-        if (date >= 10){
-            dateStr = dateStr + "-" + String.valueOf(date);
-        }else{
-            dateStr = dateStr + "-0" + String.valueOf(date);
-        }
-
-        Date day = Date.valueOf(dateStr);
-        return this.numberMessageService.searchNumber(doctorNum, day);
-    }
-
+    //用于修改号源时的查询接口
     @GetMapping("/getNumberByDoctor")
     public List<NumberMessage> getNumberByDoctor(String doctorNum){
         return this.numberMessageService.getUsefulNumberByDoctor(doctorNum);
@@ -80,6 +81,7 @@ public class NumberMessageController {
         return this.numberMessageService.getDoctorsByDeptDate(dept, date);
     }
 
+    //获得某位医生的预约信息，时间、地点等
     @GetMapping("/getNumberMessage")
     public NumberMessage getNumberMessage(String doctorNum, Date date){
         return this.numberMessageService.searchNumber(doctorNum, date);

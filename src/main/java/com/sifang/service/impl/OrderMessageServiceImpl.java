@@ -187,7 +187,7 @@ public class OrderMessageServiceImpl implements OrderMessageService {
             PatientMessage patientMessage = this.patientService.getPatientByAccount(patientAccount);
             Doctor doctor = this.doctorService.getDoctorByNum(numberMessage.getDoctorNum());
 
-            result.put("dept", ""+(orderMessageList.get(i).getDept()));
+            result.put("dept", ""+deptService.getDeptById(orderMessageList.get(i).getDept()).getName());
             result.put("time", orderMessageList.get(i).getDetailTime());
             result.put("sequence", ""+orderMessageList.get(i).getNumSequence());
             result.put("orderDate", orderMessageList.get(i).getOrderDate().toString());
